@@ -23,13 +23,15 @@ Erstellen Sie zudem eine zusätzliche Klasse "RoomDatabaseHelper", welche noch e
 implementation "androidx.room:room-runtime:2.3.0"
 annotationProcessor "androidx.room:room-compiler:2.3.0"
 ```
-3. Mit der Task-Klasse haben Sie bereits die Entität gegeben, welche in der Datenbank gespeichert werden soll. Diese Klasse repräsentiert eine Tabelle und jedes Klassenattribut eine Spalte in unserer SQLite Datenbank. Das Ganze kann man sich so vorstellen:
-![Beispiel-Tabelle einer Datenbank](./docs/beispiel-tabelle.PNG)
+3. Mit der Task-Klasse haben Sie bereits die Entität gegeben, welche in der Datenbank gespeichert werden soll. Diese Klasse repräsentiert eine Tabelle und jedes Klassenattribut eine Spalte in unserer SQLite Datenbank. Das Ganze kann man sich so vorstellen:<br/>
+|  ![Beispiel-Tabelle einer Datenbank](./docs/beispiel-tabelle.PNG)   |
+|:------:|
+| Übersicht über die Struktur, die die Task-Tabelle der Datenbank besitzen soll. Beachte: Die Attribute createdAt und currentState sind komplexe Objekte und können nicht ohne Weiteres in der Datenbank gespeichert werden (siehe Punkt 6)   |
 Damit die Room Library auch versteht, dass es sich bei Task um eine Entität handelt, muss die Klasse entsprechend annotiert werden. Beachten Sie dabei auch, dass jede Entität einen sog. Primärschlüssel besitzt, also ein (oder auch mehrere) Attribut(e), welches jeden Datenpunkt unserer Datenbank eindeutig identifiziert.
 4. Implementieren Sie das [DAO](https://developer.android.com/training/data-storage/room/accessing-data.html). Das DAO muss ein Interface (bevorzugt) oder eine abstrakte Klasse sein. Das DAO soll Methoden enthalten, die abstrakten Zugriff auf die Datenbank erlauben. Ihr DAO soll dabei zwei Methoden enthalten: Eine Methode zum auslesen aller in der Datenbank gespeicherten Tasks und eine Methode zum Einfügen eines einzelnen Tasks in die Datenbank.
 5. Erstellen Sie eine Klasse für die Room Database. Diese darf nicht instanziiert werden können (abstract) und muss von RoomDatabase erben. Vergessen Sie auch hier nicht, die Klasse dementsprechend zu annotieren. Durch eine abstrakte Getter-Methode macht die Datenbank Ihr DAO verfügbar. Optional: Um zu vermeiden, dass mehrere Datenbank-Instanzen gleichzeitig aktiv sind, könnten sie das [Singleton-Pattern](https://en.wikipedia.org/wiki/Singleton_pattern) verwenden.
 6. Nachdem mit Room keine komplexen Objekte, wie Date oder TaskState (Strings ausgeschlossen!) gespeichert werden können, muss für derartige Daten ein TypeConverter eingesetzt werden. Erstellen Sie deshalb eine Klasse, die Methoden bereitstellt, um komplexe in primitive Datentypen umzuwandeln und vice versa. Typkonverter müssen dabei mit @TypeConverter annotiert werden. Zudem müssens Sie der Room-Database-Klasse die @TypeConverters - Annotation verleihen, damit Room über die von Ihnen definierte Konverterklasse informiert ist. Eine kurze, prägnante Zusammenfassung, mit verständlichem Beispielcode ist [hier](https://developer.android.com/training/data-storage/room/referencing-data) zu finden.
-6. Erstellen Sie nun eine Klasse "DatabaseHelper", mit derer Hilfe Sie den kompletten Datenbank-Zugriff bündeln und verwalten können. In diesem Helper soll die Datenbank erstellt werden: 
+7. Erstellen Sie nun eine Klasse "DatabaseHelper", mit derer Hilfe Sie den kompletten Datenbank-Zugriff bündeln und verwalten können. In diesem Helper soll die Datenbank erstellt werden: 
 AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "database-name").allowMainThreadQueries().addTypeConverter(typeConverterInstance).build();
 Außerdem soll die Helper-Klasse eine Methode zum Einfügen eines Tasks in die Datenbank, sowie zum Auslesen aller in der Datenbank gespeicherten Tasks, enthalten. 
 8. Integrieren Sie die Datenbank in ihre ToDo-App. Initialisieren Sie zunächst den DatabaseHelper in der onCreate() Methode und binden Sie ihn an den passenden Stellen im Code ein: Beim Starten der App sollen alle bereits in der Datenbank gespeicherten Einträge ausgelesen und entsprechend in der ListView angezeigt werden. Beim Hinzufügen eines neuen Tasks soll dieser zunächst in der Datenbank gespeichert und dann in die entsprechende Datenstruktur geladen werden, sodass dieser mithilfe des CustomAdapters und der ListView auf dem Display angezeigt wird.
@@ -40,10 +42,10 @@ Außerdem soll die Helper-Klasse eine Methode zum Einfügen eines Tasks in die D
 Es können aktuell zwar immer neue Tasks hinzugefügt und auch als abgeschlossen markiert werden, allerdings können bestehende Tasks nicht komplett entfernt werden. Erweitern Sie Ihren Code also dementsprechend, um einen Task sowohl von der ListView zu entfernen und ergänzen Sie eine entsprechende Datenbankabfrage, die das Löschen eines einzelnen Tasks aus der Datenbank erlaubt. Das Löschen könnte z.B. implementiert werden, indem in einem einzelnen ListView-Eintrag ein zusätliches Delete-Icon mit OnClickListener ergänzt wird.
 
 ### Filtern von Tasks
-Um nur offene Tasks oder Tasks eines bestimmten Datums anzeigen zu lassen, könnten sie eine Filterfunktion einbauen. Im simpelsten Fall können unterschiedliche Buttons dazu genutzt werden, nur bestimmte Tasks anzeigen zu lassen. Dazu müssen entsprechende Datenbankabfragen im DAO, sowie entsprechende Methoden in Ihrem RoomDatabaseHelper ergänzt werden.
+Um nur offene Tasks oder Tasks eines bestimmten Datums anzeigen zu lassen, können sie eine Art Filterfunktion implementieren. Im simpelsten Fall können unterschiedliche Buttons dazu genutzt werden, nur bestimmte Tasks anzeigen zu lassen. Dazu müssen entsprechende Datenbankabfragen im DAO, sowie entsprechende Methoden in Ihrem RoomDatabaseHelper ergänzt werden.
 
 ## Screenshots der Anwendung
 
-|  Erstelle Tasks bleiben nun auch nach Beenden der App erhalten und werden automatisch beim nächsten Starten der App in die ListView geladen   |
+|  Erstellte Tasks bleiben nun auch nach Beenden der App erhalten und werden automatisch beim nächsten Start in die ListView geladen   |
 |:------:|
 | ![Screenshots der ToDo-App](./docs/screenshot_possible_results_simple.png)   |
