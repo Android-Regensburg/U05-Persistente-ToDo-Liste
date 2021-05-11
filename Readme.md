@@ -24,9 +24,9 @@ implementation "androidx.room:room-runtime:2.3.0"
 annotationProcessor "androidx.room:room-compiler:2.3.0"
 ```
 3. Mit der Task-Klasse haben Sie bereits die Entität gegeben, welche in der Datenbank gespeichert werden soll. Diese Klasse repräsentiert eine Tabelle und jedes Klassenattribut eine Spalte in unserer SQLite Datenbank. Das Ganze kann man sich so vorstellen:<br/>
-|  ![Beispiel-Tabelle einer Datenbank](./docs/beispiel-tabelle.PNG)   |
+|  Übersicht über die Struktur, die die Task-Tabelle der Datenbank besitzen soll. Beachte: Die Attribute createdAt und currentState sind komplexe Objekte und können nicht ohne Weiteres in der Datenbank gespeichert werden (siehe Punkt 6)   |
 |:------:|
-| Übersicht über die Struktur, die die Task-Tabelle der Datenbank besitzen soll. Beachte: Die Attribute createdAt und currentState sind komplexe Objekte und können nicht ohne Weiteres in der Datenbank gespeichert werden (siehe Punkt 6)   |
+| ![Beispiel-Tabelle einer Datenbank](./docs/beispiel-tabelle.PNG)   |<br/>
 Damit die Room Library auch versteht, dass es sich bei Task um eine Entität handelt, muss die Klasse entsprechend annotiert werden. Beachten Sie dabei auch, dass jede Entität einen sog. Primärschlüssel besitzt, also ein (oder auch mehrere) Attribut(e), welches jeden Datenpunkt unserer Datenbank eindeutig identifiziert.
 4. Implementieren Sie das [DAO](https://developer.android.com/training/data-storage/room/accessing-data.html). Das DAO muss ein Interface (bevorzugt) oder eine abstrakte Klasse sein. Das DAO soll Methoden enthalten, die abstrakten Zugriff auf die Datenbank erlauben. Ihr DAO soll dabei zwei Methoden enthalten: Eine Methode zum auslesen aller in der Datenbank gespeicherten Tasks und eine Methode zum Einfügen eines einzelnen Tasks in die Datenbank.
 5. Erstellen Sie eine Klasse für die Room Database. Diese darf nicht instanziiert werden können (abstract) und muss von RoomDatabase erben. Vergessen Sie auch hier nicht, die Klasse dementsprechend zu annotieren. Durch eine abstrakte Getter-Methode macht die Datenbank Ihr DAO verfügbar. Optional: Um zu vermeiden, dass mehrere Datenbank-Instanzen gleichzeitig aktiv sind, könnten sie das [Singleton-Pattern](https://en.wikipedia.org/wiki/Singleton_pattern) verwenden.
