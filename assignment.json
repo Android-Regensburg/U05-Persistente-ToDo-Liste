@@ -1,0 +1,7 @@
+{
+  "title": "Persistente ToDo-Liste",
+  "abstract": "In dieser Aufgabe erweitern sie die ToDo-Listen-App des letzten Übungsblattes. Die erstellten Tasks sollen nun dauerhaft auf dem Smartphone gespeichert werden, sodass wir beim nächsten Starten unserer App auf unseren bereits erstellten Tasks zugreifen können.",
+  "hasStarterCode": true,
+  "hasSolutionCode": true,
+  "solutionAvailableOn": "2021-05-20"
+}
