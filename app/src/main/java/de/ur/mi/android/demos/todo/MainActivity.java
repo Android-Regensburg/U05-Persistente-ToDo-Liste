@@ -8,7 +8,7 @@ import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.Collections;
-import de.ur.mi.android.demos.todo.room.DatabaseHelper;
+import de.ur.mi.android.demos.todo.room.RoomDatabaseHelper;
 import de.ur.mi.android.demos.todo.tasks.Task;
 import de.ur.mi.android.demos.todo.ui.TaskListAdapter;
 
@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Task> tasks;
     private TaskListAdapter taskListAdapter;
     private EditText taskDescriptionInput;
-    private DatabaseHelper dbHelper;
+    private RoomDatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initDatabaseHelper(){
-        dbHelper = new DatabaseHelper(getApplicationContext());
+        dbHelper = new RoomDatabaseHelper(getApplicationContext());
         tasks = dbHelper.getAllTasksFromDB();
         updateTasksInAdapter();
     }

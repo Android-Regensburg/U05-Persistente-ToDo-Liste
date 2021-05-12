@@ -6,11 +6,11 @@ import java.util.ArrayList;
 
 import de.ur.mi.android.demos.todo.tasks.Task;
 
-public class DatabaseHelper {
+public class RoomDatabaseHelper {
 
     TaskRoomDatabase db;
 
-    public DatabaseHelper(Context context){
+    public RoomDatabaseHelper(Context context){
         db = TaskRoomDatabase.getDatabase(context);
     }
 

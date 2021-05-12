@@ -13,7 +13,6 @@ public abstract class TaskRoomDatabase extends RoomDatabase {
 
     public abstract TaskDAO taskDao();
     private static TaskRoomDatabase INSTANCE;
-
     //Singleton
     static TaskRoomDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
