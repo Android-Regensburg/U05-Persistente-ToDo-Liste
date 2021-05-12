@@ -1,4 +1,4 @@
-package de.ur.mi.android.base;
+package de.ur.mi.android.demos.todo;
 
 import android.content.Context;
 
@@ -21,7 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-
-        assertEquals("de.ur.mi.android.base", appContext.getPackageName());
+        assertEquals("de.ur.mi.android.demos.simple_todo_list", appContext.getPackageName());
     }
 }
