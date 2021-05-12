@@ -38,7 +38,8 @@ annotationProcessor "androidx.room:room-compiler:2.3.0"
 7. Erstellen Sie nun eine Klasse "RoomDatabaseHelper", mit derer Hilfe Sie den kompletten Datenbank-Zugriff bündeln und verwalten können. In diesem Helper soll die Datenbank erstellt werden: 
 ```
 AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "database-name")
-                      .allowMainThreadQueries().build();
+                      .allowMainThreadQueries()
+                      .build();
 ```
 Außerdem soll die Helper-Klasse eine Methode zum Einfügen eines Tasks in die Datenbank, sowie zum Auslesen aller in der Datenbank gespeicherten Tasks, enthalten. 
 Anmerkung: Room unterstützt normalerweise keinen Zugriff über den Haupt-Thread, außer man ruft explizit allowMainThreadQueries() auf. Das wird sllerdings NICHT empfohlen, da sonst der UI-Thread blockiert werden könnte (Für diese Übungsaufgabe ist das noch ok, asynchrones Arbeiten sehen wir uns dann in den nächsten Übungsblättern erst an).
