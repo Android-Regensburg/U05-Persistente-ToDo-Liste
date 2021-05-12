@@ -3,18 +3,18 @@ Erweiterung von U04-Eine-einfache-ToDo-Liste um das Speichern der erstellten Tas
 
 ## Aufgabe
 
-In dieser Aufgabe erweitern Sie die einfache ToDo-Listen App aus U04. Bisher gingen die erstellten Tasks nach Beenden der App verloren. Dies sollen Sie nun ändern, indem Sie mittels der [`Room Persistence Library`](https://developer.android.com/training/data-storage/room) die Daten in einer SQLite Datenbank speichern. Beim Starten der App sollen alle bisher gespeicherten Tasks aus der Datenbank ausgelesen und auf dem Display angezeigt werden. Beim Erstellen eines neuen Tasks soll dieser neben dem Anzeigen in der ListView nun zusätlich auch noch in der Datenbank gespeichert werden.
+In dieser Aufgabe erweitern Sie die einfache ToDo-Listen App aus U04. Bisher gingen die erstellten Tasks nach Beenden der App verloren. Dies sollen Sie nun ändern, indem Sie mittels der [Room Persistence Library](https://developer.android.com/training/data-storage/room) die Daten in einer SQLite Datenbank speichern. Beim Starten der App sollen alle bisher gespeicherten Tasks aus der Datenbank ausgelesen und auf dem Display angezeigt werden. Beim Erstellen eines neuen Tasks soll dieser neben dem Anzeigen in der ListView nun zusätlich auch noch in der Datenbank gespeichert werden.
 
 ### Vorgaben
 
-Gerne können Sie auf ihrer Implementierung der ToDo-Listen-App aus U04 weiter aufbauen. Gibt es allerdings noch Probleme in Ihrem Code oder besitzt Ihre App nicht die in U04 beschriebene Funktionsfähigkeit, empfehlen wir Ihnen, das von uns bereitgestellte Starterpaket zu nutzen (entspricht dem bereits veröffentlichten Lösungsvorschlag zu U04).
+Gerne können Sie auf ihrer Implementierung der ToDo-Listen-App aus U04 weiter aufbauen. Gibt es allerdings noch Probleme in Ihrem Code oder besitzt Ihre App nicht die in U04 beschriebene Funktionsfähigkeit, empfehlen wir Ihnen, das von uns bereitgestellte Starterpaket zu nutzen (entspricht dem bereits veröffentlichten Lösungsvorschlag zu U04).<br/>
 Sie sollten nun also eine App als Ausgangspunkt haben, mit der neue Tasks über einen Edittext und einen Add-Button erstellt und über einen eigenen ArrayAdapter in der ListView (oder auch RecyclerView) entsprechend angezeigt werden können. Jedes Task-Element wird durch eine Instanz der Task-Klasse abgebildet und besitzt neben einer eindeutigen ID einen kurzen Beschreibungstext, ein Erstellungsdatum und einen Status (offen vs. erledigt). Die Tasks werden sortiert in der ListView angezeigt (Sortierung nach Status und Erstellungsdatum) und über einen LongClick auf ein ListView-Element kann der Status des korrespondierenden Tasks geändert werden.
 
 ## Vorgehen
 Die Room Persistence Library bietet eine Abstraktionsschicht für SQLite und ermöglicht Ihnen einen einfachen Datenbankzugriff. Room besteht aus den drei Hauptkomponenten:
-- Database: Der Hauptzugang zur Datenbank der App.
-- DAO (Data Access Object): Ein Interface; beinhaltet Methoden, um auf die Datenbank zugreifen zu können.
-- Entity: Entspricht einer Tabelle innerhalb unserer Datenbank.
+- [Database](https://developer.android.com/reference/kotlin/androidx/room/Database): Der Hauptzugang zur Datenbank der App.
+- [DAO](https://developer.android.com/training/data-storage/room/accessing-data) (Data Access Object): Ein Interface; beinhaltet Methoden, um auf die Datenbank zugreifen zu können.
+- [Entity](https://developer.android.com/training/data-storage/room/defining-data): Entspricht einer Tabelle innerhalb unserer Datenbank.
 Erstellen Sie zudem eine zusätzliche Klasse "RoomDatabaseHelper", welche noch einmal explizit zur Trennung von Datenbank(-zugriff) und Code fungiert. In dieser soll die Datenbank erstellt, sowie die Methoden zum Einfügen eines neuen Tasks in die Datenbank und zum Auslesen aller in der Datenbank gespeicherten Tasks, implementiert werden. Des Weiteren wird eine Klasse zur Typumwandlung von komplexen Datentypen benötigt, da diese nicht mit Room gespeichert werden können.
 
 1. Überprüfen Sie, ob Ihre App den bisherigen Anforderungen/ Vorgaben der ToDo-Liste aus U04 gerecht wird. Gegebenenfalls können Sie sich das Starterpaket herunterladen und Ihre App auf dessen Basis weiterentwickeln.
@@ -23,13 +23,13 @@ Erstellen Sie zudem eine zusätzliche Klasse "RoomDatabaseHelper", welche noch e
 implementation "androidx.room:room-runtime:2.3.0"
 annotationProcessor "androidx.room:room-compiler:2.3.0"
 ```
-3. Mit der Task-Klasse haben Sie bereits die Entität gegeben, welche in der Datenbank gespeichert werden soll. Diese Klasse repräsentiert eine Tabelle und jedes Klassenattribut eine Spalte in unserer SQLite Datenbank. Einen Überblick, wie unsere Datenbank aussehen soll, bietet das Bild unten. Damit die Room Library auch versteht, dass es sich bei Task um eine Entität handelt, muss die Klasse entsprechend annotiert werden. Beachten Sie dabei auch, dass jede Entität einen sog. Primärschlüssel besitzt, also ein (oder auch mehrere) Attribut(e), welches jeden Datenpunkt unserer Datenbank eindeutig identifiziert.<br/>
+3. Mit der Task-Klasse haben Sie bereits die Entität gegeben, welche in der Datenbank gespeichert werden soll. Diese Klasse repräsentiert eine Tabelle und jedes Klassenattribut eine Spalte in unserer SQLite Datenbank. Einen Überblick, wie unsere Datenbank aussehen soll, bietet das Bild unten. Damit die Room Library auch versteht, dass es sich bei Task um eine Entität handelt, muss die Klasse entsprechend annotiert werden. Beachten Sie dabei auch, dass jede Entität einen sog. **Primärschlüssel** besitzt, also ein (oder auch mehrere) Attribut(e), welches jeden Datenpunkt unserer Datenbank eindeutig identifiziert.<br/>
 
 |  Übersicht über die Struktur, die die Task-Tabelle der Datenbank besitzen soll. Beachte: Die Attribute id, createdAt und currentState sind komplexe Objekte und können nicht ohne Weiteres in der Datenbank gespeichert werden (siehe Punkt 6)   |
 |:------:|
 | ![Beispiel-Tabelle einer Datenbank](./docs/beispiel-tabelle.PNG)   |<br/>
 
-4. Implementieren Sie das [DAO](https://developer.android.com/training/data-storage/room/accessing-data.html). Das DAO muss ein Interface (bevorzugt) oder eine abstrakte Klasse sein. Das DAO soll Methoden enthalten, die abstrakten Zugriff auf die Datenbank erlauben. Ihr DAO soll dabei drei Methoden enthalten: 
+4. Implementieren Sie das DAO. Das DAO muss ein Interface (bevorzugt) oder eine abstrakte Klasse sein. Das DAO soll Methoden enthalten, die abstrakten Zugriff auf die Datenbank erlauben. Ihr DAO soll dabei drei Methoden enthalten: 
 - Eine Methode zum Auslesen aller in der Datenbank gespeicherten Tasks
 - Eine Methode zum Einfügen eines einzelnen Tasks in die Datenbank
 - Eine Methode zum Updaten eines Tasks, wenn sich dessen Status verändert hat
