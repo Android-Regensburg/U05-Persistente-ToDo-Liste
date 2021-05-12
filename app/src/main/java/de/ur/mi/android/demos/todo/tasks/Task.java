@@ -1,5 +1,8 @@
 package de.ur.mi.android.demos.todo.tasks;
-
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 import java.util.Date;
 import java.util.UUID;
 
@@ -19,11 +22,15 @@ import java.util.UUID;
  * ermöglicht. Offene Aufgaben werden vor geschlossenen Aufgaben einsportiert. Aufgaben mit
  * gleichem Status werden nach dem Erstellungsdatum sortiert.
  */
+@Entity(tableName = "task_table")
 public class Task implements Comparable<Task> {
-
-    private final UUID id;
-    private final String description;
-    private final Date createdAt;
+    @PrimaryKey
+    @NonNull
+    private UUID id;
+    private String description;
+    @ColumnInfo(name = "created_at")
+    private Date createdAt;
+    @ColumnInfo(name = "current_state")
     private TaskState currentState;
 
     public Task(String description) {
@@ -38,6 +45,34 @@ public class Task implements Comparable<Task> {
         this.createdAt = createdAt;
         this.currentState = currentState;
         this.description = description;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public TaskState getCurrentState() {
+        return currentState;
+    }
+
+    public void setCurrentState(TaskState currentState) {
+        this.currentState = currentState;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     public String getID() {

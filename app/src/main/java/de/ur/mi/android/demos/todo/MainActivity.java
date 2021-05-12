@@ -8,6 +8,7 @@ import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.Collections;
+import de.ur.mi.android.demos.todo.room.DatabaseHelper;
 import de.ur.mi.android.demos.todo.tasks.Task;
 import de.ur.mi.android.demos.todo.ui.TaskListAdapter;
 
@@ -16,13 +17,14 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Task> tasks;
     private TaskListAdapter taskListAdapter;
     private EditText taskDescriptionInput;
+    private DatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initTasks();
         initUI();
-        taskDescriptionInput.requestFocus();
+        initDatabaseHelper();
     }
 
     private void initTasks() {
@@ -33,6 +35,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initListView();
         initInputElements();
+    }
+
+    private void initDatabaseHelper(){
+        dbHelper = new DatabaseHelper(getApplicationContext());
+        tasks = dbHelper.getAllTasksFromDB();
+        updateTasksInAdapter();
     }
 
     private void initListView() {
@@ -62,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void addTask(String description) {
         Task taskToAdd = new Task(description);
+        dbHelper.addSingleTaskToDB(taskToAdd);
         tasks.add(taskToAdd);
         updateTasksInAdapter();
     }
@@ -75,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 taskToToggle.markAsClosed();
             }
         }
+        dbHelper.updateSingleTaskInDB(tasks.get(position));
         updateTasksInAdapter();
     }
 
