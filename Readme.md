@@ -27,8 +27,9 @@ annotationProcessor "androidx.room:room-compiler:2.3.0"
 ```
 3. Mit der Task-Klasse haben Sie bereits die Entität gegeben, welche in der Datenbank gespeichert werden soll. Diese Klasse repräsentiert eine Tabelle und jedes Klassenattribut eine Spalte in unserer SQLite Datenbank. Einen Überblick, wie unsere Datenbank aussehen soll, bietet das Bild unten. Damit die Room Library auch versteht, dass es sich bei Task um eine Entität handelt, muss die Klasse entsprechend annotiert werden. Beachten Sie dabei auch, dass jede Entität einen sog. **Primärschlüssel** besitzt, also ein (oder auch mehrere) Attribut(e), welches jeden Datenpunkt unserer Datenbank eindeutig identifiziert.<br/>
 
-![Beispiel-Tabelle einer Datenbank](./docs/beispiel-tabelle.PNG)
-*grundlegende Struktur, die die Datenbank annehmen soll*
+
+![Beispiel-Tabelle einer Datenbank](./docs/beispiel-tabelle.PNG)<br/>
+
 
 4. Implementieren Sie das DAO. Das DAO muss ein Interface (bevorzugt) oder eine abstrakte Klasse sein. Das DAO soll Methoden enthalten, die abstrakten Zugriff auf die Datenbank erlauben. Ihr DAO soll dabei drei Methoden enthalten: 
 - Eine Methode zum Auslesen aller in der Datenbank gespeicherten Tasks
