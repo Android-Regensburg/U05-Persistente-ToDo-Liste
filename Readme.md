@@ -14,7 +14,7 @@ Sie sollten nun also eine App als Ausgangspunkt haben, mit der neue Tasks über 
 Die Room Persistence Library bietet eine Abstraktionsschicht für SQLite und ermöglicht Ihnen einen einfachen Datenbankzugriff. Room besteht aus den drei Hauptkomponenten:
 - [Database](https://developer.android.com/reference/kotlin/androidx/room/Database): Der Hauptzugang zur Datenbank der App.
 - [DAO](https://developer.android.com/training/data-storage/room/accessing-data) (Data Access Object): Ein Interface; beinhaltet Methoden, um auf die Datenbank zugreifen zu können.
-- [Entity](https://developer.android.com/training/data-storage/room/defining-data): Entspricht einer Tabelle innerhalb unserer Datenbank.<br/>
+- [Entity](https://developer.android.com/training/data-storage/room/defining-data): Entspricht einer Tabelle innerhalb unserer Datenbank.<a/>
 Erstellen Sie zudem eine zusätzliche Klasse "RoomDatabaseHelper", welche noch einmal explizit zur Trennung von Datenbank(-zugriff) und Code fungiert. In dieser soll die Datenbank erstellt, sowie die Methoden zum Einfügen eines neuen Tasks in die Datenbank und zum Auslesen aller in der Datenbank gespeicherten Tasks, implementiert werden. Des Weiteren wird eine Klasse zur Typumwandlung von komplexen Datentypen benötigt, da diese nicht mit Room gespeichert werden können.
 
 1. Überprüfen Sie, ob Ihre App den bisherigen Anforderungen/ Vorgaben der ToDo-Liste aus U04 gerecht wird. Gegebenenfalls können Sie sich das Starterpaket herunterladen und Ihre App auf dessen Basis weiterentwickeln.
@@ -25,7 +25,8 @@ annotationProcessor "androidx.room:room-compiler:2.3.0"
 ```
 3. Mit der Task-Klasse haben Sie bereits die Entität gegeben, welche in der Datenbank gespeichert werden soll. Diese Klasse repräsentiert eine Tabelle und jedes Klassenattribut eine Spalte in unserer SQLite Datenbank. Einen Überblick, wie unsere Datenbank aussehen soll, bietet das Bild unten. Damit die Room Library auch versteht, dass es sich bei Task um eine Entität handelt, muss die Klasse entsprechend annotiert werden. Beachten Sie dabei auch, dass jede Entität einen sog. **Primärschlüssel** besitzt, also ein (oder auch mehrere) Attribut(e), welches jeden Datenpunkt unserer Datenbank eindeutig identifiziert.<br/>
 
-![Beispiel-Tabelle einer Datenbank](./docs/beispiel-tabelle.PNG)<br/><br/>
+![Beispiel-Tabelle einer Datenbank](./docs/beispiel-tabelle.PNG)
+*grundlegende Struktur, die die Datenbank annehmen soll*
 
 4. Implementieren Sie das DAO. Das DAO muss ein Interface (bevorzugt) oder eine abstrakte Klasse sein. Das DAO soll Methoden enthalten, die abstrakten Zugriff auf die Datenbank erlauben. Ihr DAO soll dabei drei Methoden enthalten: 
 - Eine Methode zum Auslesen aller in der Datenbank gespeicherten Tasks
