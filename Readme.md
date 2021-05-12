@@ -3,7 +3,7 @@ Erweiterung von U04-Eine-einfache-ToDo-Liste um das Speichern der erstellten Tas
 
 ## Aufgabe
 
-In dieser Aufgabe erweitern Sie die einfache ToDo-Listen App aus U04. Bisher gingen die erstellten Tasks nach Beenden der App verloren. Dies sollen Sie nun ändern, indem Sie mittels der `Room Persistence Library` die Daten in einer SQLite Datenbank speichern. Beim Starten der App sollen alle bisher gespeicherten Tasks aus der Datenbank ausgelesen und auf dem Display angezeigt werden. Beim Erstellen eines neuen Tasks soll dieser neben dem Anzeigen in der ListView nun zusätlich auch noch in der Datenbank gespeichert werden.
+In dieser Aufgabe erweitern Sie die einfache ToDo-Listen App aus U04. Bisher gingen die erstellten Tasks nach Beenden der App verloren. Dies sollen Sie nun ändern, indem Sie mittels der [`Room Persistence Library`](https://developer.android.com/training/data-storage/room) die Daten in einer SQLite Datenbank speichern. Beim Starten der App sollen alle bisher gespeicherten Tasks aus der Datenbank ausgelesen und auf dem Display angezeigt werden. Beim Erstellen eines neuen Tasks soll dieser neben dem Anzeigen in der ListView nun zusätlich auch noch in der Datenbank gespeichert werden.
 
 ### Vorgaben
 
@@ -37,7 +37,7 @@ annotationProcessor "androidx.room:room-compiler:2.3.0"
 6. Nachdem mit Room keine komplexen Objekte, wie Date oder TaskState (Strings ausgeschlossen!) gespeichert werden können, muss für derartige Daten ein TypeConverter eingesetzt werden. Erstellen Sie deshalb eine Klasse, die Methoden bereitstellt, um komplexe in primitive Datentypen umzuwandeln und vice versa. Typkonverter müssen dabei mit @TypeConverter annotiert werden. Zudem müssens Sie der Room-Database-Klasse die @TypeConverters - Annotation verleihen, damit Room über die von Ihnen definierte Konverterklasse informiert ist. Eine kurze, prägnante Zusammenfassung, mit verständlichem Beispielcode ist [hier](https://developer.android.com/training/data-storage/room/referencing-data) zu finden.
 7. Erstellen Sie nun eine Klasse "RoomDatabaseHelper", mit derer Hilfe Sie den kompletten Datenbank-Zugriff bündeln und verwalten können. In diesem Helper soll die Datenbank erstellt werden: 
 ```
-AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "database-name")
+AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppRoomDatabase.class, "database-name")
                       .allowMainThreadQueries()
                       .build();
 ```
