@@ -14,7 +14,9 @@ Sie sollten nun also eine App als Ausgangspunkt haben, mit der neue Tasks über 
 Die Room Persistence Library bietet eine Abstraktionsschicht für SQLite und ermöglicht Ihnen einen einfachen Datenbankzugriff. Room besteht aus den drei Hauptkomponenten:
 - [Database](https://developer.android.com/reference/kotlin/androidx/room/Database): Der Hauptzugang zur Datenbank der App.
 - [DAO](https://developer.android.com/training/data-storage/room/accessing-data) (Data Access Object): Ein Interface; beinhaltet Methoden, um auf die Datenbank zugreifen zu können.
-- [Entity](https://developer.android.com/training/data-storage/room/defining-data): Entspricht einer Tabelle innerhalb unserer Datenbank.<a/>
+- [Entity](https://developer.android.com/training/data-storage/room/defining-data): Entspricht einer Tabelle innerhalb unserer Datenbank.
+
+
 Erstellen Sie zudem eine zusätzliche Klasse "RoomDatabaseHelper", welche noch einmal explizit zur Trennung von Datenbank(-zugriff) und Code fungiert. In dieser soll die Datenbank erstellt, sowie die Methoden zum Einfügen eines neuen Tasks in die Datenbank und zum Auslesen aller in der Datenbank gespeicherten Tasks, implementiert werden. Des Weiteren wird eine Klasse zur Typumwandlung von komplexen Datentypen benötigt, da diese nicht mit Room gespeichert werden können.
 
 1. Überprüfen Sie, ob Ihre App den bisherigen Anforderungen/ Vorgaben der ToDo-Liste aus U04 gerecht wird. Gegebenenfalls können Sie sich das Starterpaket herunterladen und Ihre App auf dessen Basis weiterentwickeln.
