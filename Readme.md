@@ -32,7 +32,7 @@ annotationProcessor "androidx.room:room-compiler:2.3.0"
 - Eine Methode zum Einfügen eines einzelnen Tasks in die Datenbank
 - Eine Methode zum Updaten eines Tasks, wenn sich dessen Status verändert hat
 5. Erstellen Sie eine Klasse für die Room Database. Diese darf nicht instanziiert werden können (abstract) und muss von RoomDatabase erben. Vergessen Sie auch hier nicht, die Klasse dementsprechend zu annotieren. Durch eine abstrakte Getter-Methode macht die Datenbank Ihr DAO verfügbar. Optional: Um zu vermeiden, dass mehrere Datenbank-Instanzen gleichzeitig aktiv sind, könnten sie das [Singleton-Pattern](https://en.wikipedia.org/wiki/Singleton_pattern) verwenden.
-6. Nachdem mit Room keine komplexen Objekte, wie Date oder TaskState (Strings ausgeschlossen!) gespeichert werden können, muss für derartige Daten ein TypeConverter eingesetzt werden. Erstellen Sie deshalb eine Klasse, die Methoden bereitstellt, um komplexe in primitive Datentypen umzuwandeln und vice versa. Typkonverter müssen dabei mit @TypeConverter annotiert werden. Zudem müssens Sie der Room-Database-Klasse die @TypeConverters - Annotation verleihen, damit Room über die von Ihnen definierte Konverterklasse informiert ist. Eine kurze, prägnante Zusammenfassung, mit verständlichem Beispielcode ist [hier](https://developer.android.com/training/data-storage/room/referencing-data) zu finden.
+6. Nachdem mit Room keine komplexen Objekte, wie Date oder TaskState (Strings ausgeschlossen!) gespeichert werden können, muss für derartige Daten ein **TypeConverter** eingesetzt werden. Erstellen Sie deshalb eine Klasse, die Methoden bereitstellt, um komplexe in primitive Datentypen umzuwandeln und vice versa. Typkonverter müssen dabei mit **@TypeConverter** annotiert werden. Zudem müssens Sie der Room-Database-Klasse die **@TypeConverters** - Annotation verleihen, damit Room über die von Ihnen definierte Konverterklasse informiert ist. Eine kurze, prägnante Zusammenfassung, mit verständlichem Beispielcode ist [hier](https://developer.android.com/training/data-storage/room/referencing-data) zu finden.
 7. Erstellen Sie nun eine Klasse "RoomDatabaseHelper", mit derer Hilfe Sie den kompletten Datenbank-Zugriff bündeln und verwalten können. In diesem Helper soll die Datenbank erstellt werden: 
 ```
 AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppRoomDatabase.class, "database-name")
@@ -40,11 +40,11 @@ AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppRoomDatabase.c
                       .build();
 ```
 Außerdem soll die Helper-Klasse eine Methode zum Einfügen eines Tasks in die Datenbank, sowie zum Auslesen aller in der Datenbank gespeicherten Tasks, enthalten. 
-Anmerkung: Room unterstützt normalerweise keinen Zugriff über den Haupt-Thread, außer man ruft explizit allowMainThreadQueries() auf. Das wird sllerdings NICHT empfohlen, da sonst der UI-Thread blockiert werden könnte (Für diese Übungsaufgabe ist das noch ok, asynchrones Arbeiten sehen wir uns dann in den nächsten Übungsblättern erst an).
-8. Integrieren Sie die Datenbank in ihre ToDo-App. Initialisieren Sie zunächst den DatabaseHelper in der onCreate() Methode und binden Sie ihn an den passenden Stellen im Code ein: 
+Anmerkung: Room unterstützt normalerweise keinen Zugriff über den Haupt-Thread, außer man ruft explizit allowMainThreadQueries() auf. Das wird allerdings NICHT empfohlen, da sonst der UI-Thread blockiert werden könnte (Für diese Übungsaufgabe ist das noch ok, asynchrones Arbeiten sehen wir uns dann in den nächsten Übungsblättern erst an).
+8. Integrieren Sie die Datenbank in ihre ToDo-App. Initialisieren Sie zunächst den RoomDatabaseHelper in der onCreate() Methode und binden Sie ihn an den passenden Stellen im Code ein: 
 - Beim Starten der App sollen alle bereits in der Datenbank gespeicherten Einträge ausgelesen und entsprechend in der ListView angezeigt werden
 - Beim Hinzufügen eines neuen Tasks soll dieser zunächst in der Datenbank gespeichert und dann in die entsprechende Datenstruktur geladen werden, sodass dieser mithilfe des CustomAdapters und der ListView auf dem Display angezeigt wird
-- Bei eine LongClick auf ein ListView-Element wird der Status des darunterliegenden Tasks verändert, was dementsprechend auch in der Datenbank geupdatet werden soll
+- Bei eine LongClick auf ein ListView-Element wird der Status des darunterliegenden Tasks verändert, was dementsprechend auch in der Datenbank upgedatet werden soll
 
 ## Mögliche Erweiterungen
 
