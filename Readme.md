@@ -60,4 +60,4 @@ Um nur offene Tasks oder Tasks eines bestimmten Datums anzeigen zu lassen, könn
 
 |  Erstellte Tasks bleiben nun auch nach Beenden der App erhalten und werden automatisch beim nächsten Start in die ListView geladen   |
 |:------:|
-| ![Screenshots der finalen ToDo-App](./docs/screenshot_to_do_list.PNG)   |
+| ![Screenshots der finalen ToDo-App](./docs/screenshot_to_do_liste.PNG)   |
