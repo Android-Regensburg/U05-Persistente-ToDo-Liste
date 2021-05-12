@@ -37,7 +37,8 @@ annotationProcessor "androidx.room:room-compiler:2.3.0"
 6. Nachdem mit Room keine komplexen Objekte, wie Date oder TaskState (Strings ausgeschlossen!) gespeichert werden können, muss für derartige Daten ein TypeConverter eingesetzt werden. Erstellen Sie deshalb eine Klasse, die Methoden bereitstellt, um komplexe in primitive Datentypen umzuwandeln und vice versa. Typkonverter müssen dabei mit @TypeConverter annotiert werden. Zudem müssens Sie der Room-Database-Klasse die @TypeConverters - Annotation verleihen, damit Room über die von Ihnen definierte Konverterklasse informiert ist. Eine kurze, prägnante Zusammenfassung, mit verständlichem Beispielcode ist [hier](https://developer.android.com/training/data-storage/room/referencing-data) zu finden.
 7. Erstellen Sie nun eine Klasse "RoomDatabaseHelper", mit derer Hilfe Sie den kompletten Datenbank-Zugriff bündeln und verwalten können. In diesem Helper soll die Datenbank erstellt werden: 
 ```
-AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "database-name").allowMainThreadQueries().build();
+AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "database-name")
+                      .allowMainThreadQueries().build();
 ```
 Außerdem soll die Helper-Klasse eine Methode zum Einfügen eines Tasks in die Datenbank, sowie zum Auslesen aller in der Datenbank gespeicherten Tasks, enthalten. 
 Anmerkung: Room unterstützt normalerweise keinen Zugriff über den Haupt-Thread, außer man ruft explizit allowMainThreadQueries() auf. Das wird sllerdings NICHT empfohlen, da sonst der UI-Thread blockiert werden könnte (Für diese Übungsaufgabe ist das noch ok, asynchrones Arbeiten sehen wir uns dann in den nächsten Übungsblättern erst an).
