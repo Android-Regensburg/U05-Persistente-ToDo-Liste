@@ -32,6 +32,8 @@ Erstellen Sie zudem eine zusätzliche Klasse "RoomDatabaseHelper", welche noch e
     | 1   | lernen      | 11.5.2021 | OPEN         |
     | 2   | einkaufen   | 13.5.2021 | CLOSED       |
     | 3   | kochen      | 15.5.2021 | OPEN         |
+
+
 4. Implementieren Sie das DAO. Das DAO muss ein Interface (bevorzugt) oder eine abstrakte Klasse sein. Das DAO soll Methoden enthalten, die abstrakten Zugriff auf die Datenbank erlauben. Ihr DAO soll dabei drei Methoden enthalten:
     * Eine Methode zum Auslesen aller in der Datenbank gespeicherten Tasks
     * Eine Methode zum Einfügen eines einzelnen Tasks in die Datenbank
