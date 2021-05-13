@@ -1,46 +1,43 @@
 package de.ur.mi.android.demos.todo;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
-import java.util.Collections;
-import de.ur.mi.android.demos.todo.room.RoomDatabaseHelper;
+
 import de.ur.mi.android.demos.todo.tasks.Task;
+import de.ur.mi.android.demos.todo.tasks.TaskManager;
 import de.ur.mi.android.demos.todo.ui.TaskListAdapter;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements TaskManager.TaskManagerListener {
 
-    private ArrayList<Task> tasks;
+    private TaskManager taskManager;
     private TaskListAdapter taskListAdapter;
     private EditText taskDescriptionInput;
-    private RoomDatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initTasks();
+        initTaskManager();
         initUI();
-        initDatabaseHelper();
+        // Request initial update from TaskManger to display tasks loaded from database when manager was created
+        taskManager.requestUpdate();
     }
 
-    private void initTasks() {
-        tasks = new ArrayList<>();
+    private void initTaskManager() {
+        taskManager = new TaskManager(getApplicationContext(), this);
     }
 
     private void initUI() {
         setContentView(R.layout.activity_main);
         initListView();
         initInputElements();
-    }
-
-    private void initDatabaseHelper(){
-        dbHelper = new RoomDatabaseHelper(getApplicationContext());
-        tasks = dbHelper.getAllTasksFromDB();
-        updateTasksInAdapter();
     }
 
     private void initListView() {
@@ -68,36 +65,21 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void addTask(String description) {
-        Task taskToAdd = new Task(description);
-        dbHelper.addSingleTaskToDB(taskToAdd);
-        tasks.add(taskToAdd);
-        updateTasksInAdapter();
-    }
-
     private void toggleTaskAtPosition(int position) {
-        Task taskToToggle = tasks.get(position);
-        if (taskToToggle != null) {
-            if (taskToToggle.isClosed()) {
-                taskToToggle.markAsOpen();
-            } else {
-                taskToToggle.markAsClosed();
-            }
-        }
-        dbHelper.updateSingleTaskInDB(tasks.get(position));
-        updateTasksInAdapter();
-    }
-
-    private void updateTasksInAdapter() {
-        Collections.sort(tasks);
-        taskListAdapter.setTasks(tasks);
+        taskManager.toggleTaskStateAtPosition(position);
     }
 
     private void onUserInputClicked(String input) {
         if (input.length() > 0) {
-            addTask(input);
+            taskManager.addTask(input);
             taskDescriptionInput.setText("");
             taskDescriptionInput.requestFocus();
         }
+    }
+
+    @Override
+    public void onTaskListUpdated() {
+        ArrayList<Task> currentTasks = taskManager.getCurrentTasks();
+        taskListAdapter.setTasks(currentTasks);
     }
 }

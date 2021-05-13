@@ -1,7 +1,6 @@
 package de.ur.mi.android.demos.todo.ui;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,8 +59,8 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
     private void bindTaskToView(Task task, View view) {
         TextView taskDescription = view.findViewById(R.id.list_item_description);
         TextView taskCreationDate = view.findViewById(R.id.list_item_creationDate);
-        taskDescription.setText(task.getDescription());
-        taskCreationDate.setText(getFormattedDateForUI(task.getCreationDate()));
+        taskDescription.setText(task.description);
+        taskCreationDate.setText(getFormattedDateForUI(task.createdAt));
     }
 
     private String getFormattedDateForUI(Date date) {

@@ -1,8 +1,11 @@
 package de.ur.mi.android.demos.todo.tasks;
+
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+
 import java.util.Date;
 import java.util.UUID;
 
@@ -26,13 +29,14 @@ import java.util.UUID;
 public class Task implements Comparable<Task> {
     @PrimaryKey
     @NonNull
-    private UUID id;
-    private String description;
+    public final UUID id;
+    public final String description;
     @ColumnInfo(name = "created_at")
-    private Date createdAt;
+    public final Date createdAt;
     @ColumnInfo(name = "current_state")
     private TaskState currentState;
 
+    @Ignore
     public Task(String description) {
         this.id = UUID.randomUUID();
         this.createdAt = new Date();
@@ -40,23 +44,11 @@ public class Task implements Comparable<Task> {
         this.description = description;
     }
 
-    private Task(String description, UUID id, Date createdAt, TaskState currentState) {
+    public Task(String description, UUID id, Date createdAt, TaskState currentState) {
         this.id = id;
         this.createdAt = createdAt;
         this.currentState = currentState;
         this.description = description;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
     }
 
     public TaskState getCurrentState() {
@@ -65,26 +57,6 @@ public class Task implements Comparable<Task> {
 
     public void setCurrentState(TaskState currentState) {
         this.currentState = currentState;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public String getID() {
-        return id.toString();
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public Date getCreationDate() {
-        return getCreationDateCopy();
     }
 
     public boolean isClosed() {

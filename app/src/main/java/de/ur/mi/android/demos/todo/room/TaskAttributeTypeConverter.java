@@ -1,7 +1,11 @@
-package de.ur.mi.android.demos.todo.tasks;
+package de.ur.mi.android.demos.todo.room;
+
 import androidx.room.TypeConverter;
+
 import java.util.Date;
 import java.util.UUID;
+
+import de.ur.mi.android.demos.todo.tasks.Task;
 
 public class TaskAttributeTypeConverter {
 
@@ -30,7 +34,7 @@ public class TaskAttributeTypeConverter {
     // TypeConverter for TaskState <-> Integer
     @TypeConverter
     public static Task.TaskState intToTaskState(Integer taskStateInt) {
-        switch(taskStateInt){
+        switch (taskStateInt) {
             case 0:
                 return Task.TaskState.OPEN;
             case 1:
@@ -42,7 +46,7 @@ public class TaskAttributeTypeConverter {
 
     @TypeConverter
     public static Integer taskStateToInt(Task.TaskState taskState) {
-        switch(taskState){
+        switch (taskState) {
             case OPEN:
                 return 0;
             case CLOSED:
