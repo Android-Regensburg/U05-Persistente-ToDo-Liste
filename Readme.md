@@ -21,12 +21,17 @@ Erstellen Sie zudem eine zusätzliche Klasse "RoomDatabaseHelper", welche noch e
 
 1. Überprüfen Sie, ob Ihre App den bisherigen Anforderungen/ Vorgaben der ToDo-Liste aus U04 gerecht wird. Gegebenenfalls können Sie sich das Starterpaket herunterladen und Ihre App auf dessen Basis weiterentwickeln.
 2. Fügen Sie folgende Dependencies zur build.gradle Datei (auf Modulebene) hinzu, um die Room Persistence Library nutzen zu können:
-```
-implementation "androidx.room:room-runtime:2.3.0"
-annotationProcessor "androidx.room:room-compiler:2.3.0"
-```
-3. Mit der Task-Klasse haben Sie bereits die Entität gegeben, welche in der Datenbank gespeichert werden soll. Diese Klasse repräsentiert eine Tabelle und jedes Klassenattribut eine Spalte in unserer SQLite Datenbank. Einen Überblick, wie unsere Datenbank aussehen soll, bietet das Bild unten. Damit die Room Library auch versteht, dass es sich bei Task um eine Entität handelt, muss die Klasse entsprechend annotiert werden. Beachten Sie dabei auch, dass jede Entität einen sog. **Primärschlüssel** besitzt, also ein (oder auch mehrere) Attribut(e), welches jeden Datenpunkt unserer Datenbank eindeutig identifiziert.
-    * ![Beispiel-Tabelle einer Datenbank](./docs/beispiel-tabelle.PNG)<br/>
+
+   ```
+   implementation "androidx.room:room-runtime:2.3.0"
+   annotationProcessor "androidx.room:room-compiler:2.3.0"
+   ```
+3. Mit der Task-Klasse haben Sie bereits die Entität gegeben, welche in der Datenbank gespeichert werden soll. Diese Klasse repräsentiert eine Tabelle und jedes Klassenattribut eine Spalte in unserer SQLite Datenbank. Einen Überblick, wie unsere Datenbank aussehen soll, bietet die Tabelle unten. Damit die Room Library auch versteht, dass es sich bei Task um eine Entität handelt, muss die Klasse entsprechend annotiert werden. Beachten Sie dabei auch, dass jede Entität einen sog. **Primärschlüssel** besitzt, also ein (oder auch mehrere) Attribut(e), welches jeden Datenpunkt unserer Datenbank eindeutig identifiziert.
+    | id  | description | createdAt | currentState |
+    | :-- | :---------- | :-------- | :----------- |
+    | 1   | lernen      | 11.5.2021 | OPEN         |
+    | 2   | einkaufen   | 13.5.2021 | CLOSED       |
+    | 3   | kochen      | 15.5.2021 | OPEN         |
 4. Implementieren Sie das DAO. Das DAO muss ein Interface (bevorzugt) oder eine abstrakte Klasse sein. Das DAO soll Methoden enthalten, die abstrakten Zugriff auf die Datenbank erlauben. Ihr DAO soll dabei drei Methoden enthalten:
     * Eine Methode zum Auslesen aller in der Datenbank gespeicherten Tasks
     * Eine Methode zum Einfügen eines einzelnen Tasks in die Datenbank
