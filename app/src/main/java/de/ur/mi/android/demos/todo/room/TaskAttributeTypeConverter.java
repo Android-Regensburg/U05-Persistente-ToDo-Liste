@@ -31,28 +31,13 @@ public class TaskAttributeTypeConverter {
         return taskID == null ? null : taskID.toString();
     }
 
-    // TypeConverter for TaskState <-> Integer
     @TypeConverter
     public static Task.TaskState intToTaskState(Integer taskStateInt) {
-        switch (taskStateInt) {
-            case 0:
-                return Task.TaskState.OPEN;
-            case 1:
-                return Task.TaskState.CLOSED;
-            default:
-                return null;
-        }
+        return Task.TaskState.values()[taskStateInt];
     }
 
     @TypeConverter
     public static Integer taskStateToInt(Task.TaskState taskState) {
-        switch (taskState) {
-            case OPEN:
-                return 0;
-            case CLOSED:
-                return 1;
-            default:
-                return null;
-        }
+        return taskState.ordinal();
     }
 }
