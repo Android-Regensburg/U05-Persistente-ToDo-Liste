@@ -7,26 +7,26 @@ import android.widget.EditText;
 import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
-import java.util.Collections;
 import de.ur.mi.android.demos.todo.tasks.Task;
+import de.ur.mi.android.demos.todo.tasks.TaskManager;
 import de.ur.mi.android.demos.todo.ui.TaskListAdapter;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements TaskManager.TaskManagerListener {
 
-    private ArrayList<Task> tasks;
+    private TaskManager taskManager;
     private TaskListAdapter taskListAdapter;
     private EditText taskDescriptionInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initTasks();
         initUI();
-        taskDescriptionInput.requestFocus();
+        initTaskManager();
     }
 
-    private void initTasks() {
-        tasks = new ArrayList<>();
+    private void initTaskManager() {
+        taskManager = new TaskManager(getApplicationContext(), this);
+        taskManager.requestUpdate();
     }
 
     private void initUI() {
@@ -60,34 +60,21 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void addTask(String description) {
-        Task taskToAdd = new Task(description);
-        tasks.add(taskToAdd);
-        updateTasksInAdapter();
-    }
-
     private void toggleTaskAtPosition(int position) {
-        Task taskToToggle = tasks.get(position);
-        if (taskToToggle != null) {
-            if (taskToToggle.isClosed()) {
-                taskToToggle.markAsOpen();
-            } else {
-                taskToToggle.markAsClosed();
-            }
-        }
-        updateTasksInAdapter();
-    }
-
-    private void updateTasksInAdapter() {
-        Collections.sort(tasks);
-        taskListAdapter.setTasks(tasks);
+        taskManager.toggleTaskStateAtPosition(position);
     }
 
     private void onUserInputClicked(String input) {
         if (input.length() > 0) {
-            addTask(input);
+            taskManager.addTask(input);
             taskDescriptionInput.setText("");
             taskDescriptionInput.requestFocus();
         }
+    }
+
+    @Override
+    public void onTaskListUpdated() {
+        ArrayList<Task> currentTasks = taskManager.getCurrentTasks();
+        taskListAdapter.setTasks(currentTasks);
     }
 }

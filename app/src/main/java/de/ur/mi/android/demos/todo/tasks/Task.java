@@ -1,5 +1,5 @@
 package de.ur.mi.android.demos.todo.tasks;
-
+import androidx.room.Ignore;
 import java.util.Date;
 import java.util.UUID;
 
@@ -20,12 +20,12 @@ import java.util.UUID;
  * gleichem Status werden nach dem Erstellungsdatum sortiert.
  */
 public class Task implements Comparable<Task> {
-
-    private final UUID id;
-    private final String description;
-    private final Date createdAt;
+    public final UUID id;
+    public final String description;
+    public final Date createdAt;
     private TaskState currentState;
 
+    @Ignore
     public Task(String description) {
         this.id = UUID.randomUUID();
         this.createdAt = new Date();
@@ -33,23 +33,19 @@ public class Task implements Comparable<Task> {
         this.description = description;
     }
 
-    private Task(String description, UUID id, Date createdAt, TaskState currentState) {
+    public Task(String description, UUID id, Date createdAt, TaskState currentState) {
         this.id = id;
         this.createdAt = createdAt;
         this.currentState = currentState;
         this.description = description;
     }
 
-    public String getID() {
-        return id.toString();
+    public TaskState getCurrentState() {
+        return currentState;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public Date getCreationDate() {
-        return getCreationDateCopy();
+    public void setCurrentState(TaskState currentState) {
+        this.currentState = currentState;
     }
 
     public boolean isClosed() {
