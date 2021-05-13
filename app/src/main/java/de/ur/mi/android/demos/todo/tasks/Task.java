@@ -2,6 +2,7 @@ package de.ur.mi.android.demos.todo.tasks;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import java.util.Date;
 import java.util.UUID;
@@ -26,61 +27,33 @@ import java.util.UUID;
 public class Task implements Comparable<Task> {
     @PrimaryKey
     @NonNull
-    private UUID id;
-    private String description;
-    @ColumnInfo(name = "created_at")
-    private Date createdAt;
-    @ColumnInfo(name = "current_state")
-    private TaskState currentState;
+    public UUID id;
+    public String description;
+    @ColumnInfo(name = "creation_date")
+    public Date creationDate;
+    @ColumnInfo(name = "task_state")
+    public TaskState state;
 
     public Task(String description) {
         this.id = UUID.randomUUID();
-        this.createdAt = new Date();
-        this.currentState = TaskState.OPEN;
+        this.creationDate = new Date();
+        this.state = TaskState.OPEN;
         this.description = description;
     }
 
     private Task(String description, UUID id, Date createdAt, TaskState currentState) {
         this.id = id;
-        this.createdAt = createdAt;
-        this.currentState = currentState;
+        this.creationDate = createdAt;
+        this.state = currentState;
         this.description = description;
     }
 
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public TaskState getCurrentState() {
-        return currentState;
-    }
-
-    public void setCurrentState(TaskState currentState) {
-        this.currentState = currentState;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public String getID() {
-        return id.toString();
+    public String getId() {
+        return this.id.toString();
     }
 
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
     public Date getCreationDate() {
@@ -88,24 +61,24 @@ public class Task implements Comparable<Task> {
     }
 
     public boolean isClosed() {
-        return currentState == TaskState.CLOSED;
+        return this.state == TaskState.CLOSED;
     }
 
     public void markAsOpen() {
-        currentState = TaskState.OPEN;
+        this.state = TaskState.OPEN;
     }
 
     public void markAsClosed() {
-        currentState = TaskState.CLOSED;
+        this.state = TaskState.CLOSED;
     }
 
     public Task copy() {
         Date creationDateFromOriginal = getCreationDateCopy();
-        return new Task(description, id, creationDateFromOriginal, currentState);
+        return new Task(description, id, creationDateFromOriginal, state);
     }
 
     private Date getCreationDateCopy() {
-        return new Date(createdAt.getTime());
+        return new Date(creationDate.getTime());
     }
 
     @Override
@@ -119,7 +92,7 @@ public class Task implements Comparable<Task> {
             return -1;
         }
         // Die beiden Aufgaben werden auf Basis des Erstellungsdatums sortiert (neuere vor älteren)
-        return -this.createdAt.compareTo(otherTask.createdAt);
+        return -this.creationDate.compareTo(otherTask.creationDate);
     }
 
     public enum TaskState {

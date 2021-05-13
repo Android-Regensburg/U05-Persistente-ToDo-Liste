@@ -10,37 +10,32 @@ import java.util.ArrayList;
 import java.util.Collections;
 import de.ur.mi.android.demos.todo.room.RoomDatabaseHelper;
 import de.ur.mi.android.demos.todo.tasks.Task;
+import de.ur.mi.android.demos.todo.tasks.TaskManager;
 import de.ur.mi.android.demos.todo.ui.TaskListAdapter;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements TaskManager.TaskManagerListener {
 
-    private ArrayList<Task> tasks;
+    private TaskManager taskManager;
     private TaskListAdapter taskListAdapter;
     private EditText taskDescriptionInput;
-    private RoomDatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initTasks();
         initUI();
-        initDatabaseHelper();
+        initTaskManager();
     }
 
-    private void initTasks() {
-        tasks = new ArrayList<>();
+    private void initTaskManager() {
+        RoomDatabaseHelper dbHelper = new RoomDatabaseHelper(getApplicationContext());
+        taskManager = new TaskManager(this, dbHelper);
+        taskManager.initTaskList();
     }
 
     private void initUI() {
         setContentView(R.layout.activity_main);
         initListView();
         initInputElements();
-    }
-
-    private void initDatabaseHelper(){
-        dbHelper = new RoomDatabaseHelper(getApplicationContext());
-        tasks = dbHelper.getAllTasksFromDB();
-        updateTasksInAdapter();
     }
 
     private void initListView() {
@@ -50,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         taskList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                toggleTaskAtPosition(position);
+                taskManager.toggleTaskStateForId(taskManager.getCurrentTasks().get(position).getId());
                 return true;
             }
         });
@@ -68,36 +63,26 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void addTask(String description) {
-        Task taskToAdd = new Task(description);
-        dbHelper.addSingleTaskToDB(taskToAdd);
-        tasks.add(taskToAdd);
-        updateTasksInAdapter();
-    }
-
-    private void toggleTaskAtPosition(int position) {
-        Task taskToToggle = tasks.get(position);
-        if (taskToToggle != null) {
-            if (taskToToggle.isClosed()) {
-                taskToToggle.markAsOpen();
-            } else {
-                taskToToggle.markAsClosed();
-            }
-        }
-        dbHelper.updateSingleTaskInDB(tasks.get(position));
-        updateTasksInAdapter();
-    }
-
-    private void updateTasksInAdapter() {
-        Collections.sort(tasks);
-        taskListAdapter.setTasks(tasks);
-    }
-
     private void onUserInputClicked(String input) {
         if (input.length() > 0) {
-            addTask(input);
-            taskDescriptionInput.setText("");
-            taskDescriptionInput.requestFocus();
+            taskManager.addTask(input);
         }
+    }
+
+    @Override
+    public void onTasksLoadedFromDatabase() {
+        taskListAdapter.setTasks(taskManager.getCurrentTasks());
+    }
+
+    @Override
+    public void onTaskAdded(Task task) {
+        taskListAdapter.setTasks(taskManager.getCurrentTasks());
+        taskDescriptionInput.setText("");
+        taskDescriptionInput.requestFocus();
+    }
+
+    @Override
+    public void onTaskChanged(Task task) {
+        taskListAdapter.setTasks(taskManager.getCurrentTasks());
     }
 }
