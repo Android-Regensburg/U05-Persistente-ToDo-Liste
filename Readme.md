@@ -45,8 +45,9 @@ Erstellen Sie zudem eine zusätzliche Klasse "RoomDatabaseHelper", welche noch e
                           .allowMainThreadQueries()
                           .build();
     ```
-Außerdem soll die Helper-Klasse eine Methode zum Einfügen eines Tasks in die Datenbank, sowie zum Auslesen aller in der Datenbank gespeicherten Tasks, enthalten. 
-Anmerkung: Room unterstützt normalerweise keinen Zugriff über den Haupt-Thread, außer man ruft explizit allowMainThreadQueries() auf. Das wird allerdings NICHT empfohlen, da sonst der UI-Thread blockiert werden könnte (Für diese Übungsaufgabe ist das noch ok, asynchrones Arbeiten sehen wir uns dann in den nächsten Übungsblättern erst an).
+   Außerdem soll die Helper-Klasse eine Methode zum Einfügen eines Tasks in die Datenbank, sowie zum Auslesen aller in der Datenbank gespeicherten Tasks, enthalten. 
+   Anmerkung: Room unterstützt normalerweise keinen Zugriff über den Haupt-Thread, außer man ruft explizit allowMainThreadQueries() auf. Das wird allerdings NICHT empfohlen, da    sonst der UI-Thread blockiert werden könnte (Für diese Übungsaufgabe ist das noch ok, asynchrones Arbeiten sehen wir uns dann in den nächsten Übungsblättern erst an).
+
 8. Integrieren Sie die Datenbank in ihre ToDo-App. Initialisieren Sie zunächst den RoomDatabaseHelper in der onCreate() Methode und binden Sie ihn an den passenden Stellen im Code ein: 
     * Beim Starten der App sollen alle bereits in der Datenbank gespeicherten Einträge ausgelesen und entsprechend in der ListView angezeigt werden
     * Beim Hinzufügen eines neuen Tasks soll dieser zunächst in der Datenbank gespeichert und dann in die entsprechende Datenstruktur geladen werden, sodass dieser mithilfe des CustomAdapters und der ListView auf dem Display angezeigt wird
