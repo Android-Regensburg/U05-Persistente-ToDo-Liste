@@ -26,8 +26,6 @@ public class MainActivity extends AppCompatActivity implements TaskManager.TaskM
 
     private void initTaskManager() {
         taskManager = new TaskManager(getApplicationContext(), this);
-        // Einmaliges Update des Taskmanagers anfordern, um die aus der Datenbank geladenen Tasks anzuzeigen, wenn der Taskmanager erstellt wurde
-        taskManager.requestUpdate();
     }
 
     private void initUI() {
