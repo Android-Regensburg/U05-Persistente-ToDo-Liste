@@ -61,7 +61,7 @@ public class TaskManager {
      */
     public void toggleTaskStateForId(String id) {
         for (Task task : tasks) {
-            if (task.id.equals(id)) {
+            if (task.id.toString().equals(id)) {
                 toggleTaskState(task);
             }
         }

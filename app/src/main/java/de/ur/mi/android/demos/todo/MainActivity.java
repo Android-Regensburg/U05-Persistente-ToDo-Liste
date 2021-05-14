@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements TaskManager.TaskM
 
     private void initTaskManager() {
         taskManager = new TaskManager(getApplicationContext(), this);
+        // Einmaliges Update des Taskmanagers anfordern, um die aus der Datenbank geladenen Tasks anzuzeigen, wenn der Taskmanager erstellt wurde
         taskManager.requestUpdate();
     }
 
@@ -42,7 +43,8 @@ public class MainActivity extends AppCompatActivity implements TaskManager.TaskM
         taskList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                toggleTaskAtPosition(position);
+                // Status des entsprechenden Tasks verändern
+                taskManager.toggleTaskStateForId(taskManager.getCurrentTasks().get(position).id.toString());
                 return true;
             }
         });
@@ -58,10 +60,6 @@ public class MainActivity extends AppCompatActivity implements TaskManager.TaskM
                 onUserInputClicked(currentInput);
             }
         });
-    }
-
-    private void toggleTaskAtPosition(int position) {
-        taskManager.toggleTaskStateAtPosition(position);
     }
 
     private void onUserInputClicked(String input) {
