@@ -15,7 +15,7 @@ Im Starterpaket finden Sie einen Lösungsansatz zur bisherigen ToDo-Listen-App a
    annotationProcessor "androidx.room:room-compiler:2.3.0"
    ```
 - Ergänzung der TaskManager-Klasse, zur Abkapselung von Daten und UI. Eine Ausführliche Erklärung finden Sie in der entsprechenden [Stream-Aufzeichnung](https://www.youtube.com/watch?v=6m_b9NZGD6w), sowie in den Code-Kommentaren.
-- Ergänzung der TaskAttributeTypeConverter-Klasse. Da Room keine komplexen Datentypen (wie Date, UUID oder TaskState) speichern kann, müssen derartige Datentypen beim Schreiben in die Datenbank zunächst in primitive, und beim Auslesen wieder in den entsprechend komplexen Datentyp konvertiert werden. Diese Klasse muss nicht verändert werden. Lediglich die Room-Datenbank muss über diese Klasse über eine entsprechende Annotation informiert werden. Einen kurze, prägnante Erklärung von TypeConvertern ist [hier](https://developer.android.com/training/data-storage/room/referencing-data) zu finden. 
+- Ergänzung der TaskAttributeTypeConverter-Klasse. Da Room keine komplexen Datentypen (wie Date, UUID oder TaskState) speichern kann, müssen derartige Datentypen beim Schreiben in die Datenbank zunächst in primitive, und beim Auslesen wieder in den entsprechend komplexen Datentyp konvertiert werden. Diese Klasse muss nicht verändert werden. Lediglich die Room-Datenbank muss über diese Klasse mithilfe einer entsprechenden Annotation informiert werden. Einen kurze, prägnante Erklärung von TypeConvertern ist [hier](https://developer.android.com/training/data-storage/room/referencing-data) zu finden. 
 
 ## Vorgehen
 Die Room Persistence Library bietet eine Abstraktionsschicht für SQLite und ermöglicht Ihnen einen einfachen Datenbankzugriff. Room besteht aus den drei Hauptkomponenten:
