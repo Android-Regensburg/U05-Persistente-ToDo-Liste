@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements TaskManager.TaskM
         super.onCreate(savedInstanceState);
         initTaskManager();
         initUI();
-        // Request initial update from TaskManger to display tasks loaded from database when manager was created
+        // Initiales Update des TaskManagers anfordern, um die von der Datenbank geladenen Tasks auf dem Display anzuzeigen
         taskManager.requestUpdate();
     }
 

@@ -15,6 +15,7 @@ public class TaskManager {
     private final TaskManagerListener listener;
     // Liste der Aufgaben, die dieser Manager verwaltet
     private final ArrayList<Task> tasks;
+    // DatabaseHelper, der den Zugriff und die Operationen auf die Datenbank bündelt
     private final TaskDatabaseHelper db;
 
     /**
@@ -25,9 +26,11 @@ public class TaskManager {
     public TaskManager(Context context, TaskManagerListener listener) {
         this.listener = listener;
         this.db = new TaskDatabaseHelper(context);
+        // alle bereits erstellten Tasks aus der Datenbank laden
         this.tasks = db.getAllTasks();
     }
 
+    // ermöglicht einmaliges Informieren der Listener über Änderungen der TaskList
     public void requestUpdate() {
         listener.onTaskListUpdated();
     }
@@ -40,6 +43,7 @@ public class TaskManager {
      */
     public void addTask(String description) {
         Task taskToAdd = new Task(description);
+        // Task zur Datenbank hinzufügen
         db.addTask(taskToAdd);
         tasks.add(taskToAdd);
         listener.onTaskListUpdated();
@@ -81,6 +85,7 @@ public class TaskManager {
             } else {
                 taskToToggle.markAsClosed();
             }
+            // Task in Datenbank updaten
             db.updateTask(taskToToggle);
             listener.onTaskListUpdated();
         }

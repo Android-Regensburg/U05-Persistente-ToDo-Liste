@@ -23,9 +23,12 @@ import java.util.UUID;
  * ermöglicht. Offene Aufgaben werden vor geschlossenen Aufgaben einsportiert. Aufgaben mit
  * gleichem Status werden nach dem Erstellungsdatum sortiert.
  */
+// Klasse als Entität markieren
 @Entity(tableName = "task_table")
 public class Task implements Comparable<Task> {
+    // id eines Tasks ist einzigartig und kann damit als Primärschlüssel verwendet werden
     @PrimaryKey
+    // Primärschlüssel dürfen nicht null sein!
     @NonNull
     public final UUID id;
     public final String description;
