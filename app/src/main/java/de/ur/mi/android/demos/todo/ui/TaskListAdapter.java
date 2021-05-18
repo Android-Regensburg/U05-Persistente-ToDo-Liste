@@ -1,22 +1,17 @@
 package de.ur.mi.android.demos.todo.ui;
-
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
-
 import de.ur.mi.android.demos.todo.R;
 import de.ur.mi.android.demos.todo.tasks.Task;
 
@@ -60,8 +55,8 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
     private void bindTaskToView(Task task, View view) {
         TextView taskDescription = view.findViewById(R.id.list_item_description);
         TextView taskCreationDate = view.findViewById(R.id.list_item_creationDate);
-        taskDescription.setText(task.getDescription());
-        taskCreationDate.setText(getFormattedDateForUI(task.getCreationDate()));
+        taskDescription.setText(task.description);
+        taskCreationDate.setText(getFormattedDateForUI(task.createdAt));
     }
 
     private String getFormattedDateForUI(Date date) {

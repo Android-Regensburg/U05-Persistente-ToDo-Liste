@@ -27,58 +27,55 @@ import java.util.UUID;
 public class Task implements Comparable<Task> {
     @PrimaryKey
     @NonNull
-    public UUID id;
-    public String description;
-    @ColumnInfo(name = "creation_date")
-    public Date creationDate;
-    @ColumnInfo(name = "task_state")
-    public TaskState state;
+    public final UUID id;
+    public final String description;
+    @ColumnInfo(name = "created_at")
+    public final Date createdAt;
+    @ColumnInfo(name = "current_state")
+    private TaskState currentState;
 
+    @Ignore
     public Task(String description) {
         this.id = UUID.randomUUID();
-        this.creationDate = new Date();
-        this.state = TaskState.OPEN;
+        this.createdAt = new Date();
+        this.currentState = TaskState.OPEN;
         this.description = description;
     }
 
-    private Task(String description, UUID id, Date createdAt, TaskState currentState) {
+    public Task(String description, UUID id, Date createdAt, TaskState currentState) {
         this.id = id;
-        this.creationDate = createdAt;
-        this.state = currentState;
+        this.createdAt = createdAt;
+        this.currentState = currentState;
         this.description = description;
     }
 
-    public String getId() {
-        return this.id.toString();
+    public TaskState getCurrentState() {
+        return currentState;
     }
 
-    public String getDescription() {
-        return this.description;
-    }
-
-    public Date getCreationDate() {
-        return getCreationDateCopy();
+    public void setCurrentState(TaskState currentState) {
+        this.currentState = currentState;
     }
 
     public boolean isClosed() {
-        return this.state == TaskState.CLOSED;
+        return currentState == TaskState.CLOSED;
     }
 
     public void markAsOpen() {
-        this.state = TaskState.OPEN;
+        currentState = TaskState.OPEN;
     }
 
     public void markAsClosed() {
-        this.state = TaskState.CLOSED;
+        currentState = TaskState.CLOSED;
     }
 
     public Task copy() {
         Date creationDateFromOriginal = getCreationDateCopy();
-        return new Task(description, id, creationDateFromOriginal, state);
+        return new Task(description, id, creationDateFromOriginal, currentState);
     }
 
     private Date getCreationDateCopy() {
-        return new Date(creationDate.getTime());
+        return new Date(createdAt.getTime());
     }
 
     @Override
@@ -92,7 +89,7 @@ public class Task implements Comparable<Task> {
             return -1;
         }
         // Die beiden Aufgaben werden auf Basis des Erstellungsdatums sortiert (neuere vor älteren)
-        return -this.creationDate.compareTo(otherTask.creationDate);
+        return -this.createdAt.compareTo(otherTask.createdAt);
     }
 
     public enum TaskState {

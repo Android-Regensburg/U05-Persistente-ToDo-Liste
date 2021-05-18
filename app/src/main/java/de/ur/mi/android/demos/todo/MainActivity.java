@@ -7,8 +7,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
-import java.util.Collections;
-import de.ur.mi.android.demos.todo.room.RoomDatabaseHelper;
 import de.ur.mi.android.demos.todo.tasks.Task;
 import de.ur.mi.android.demos.todo.tasks.TaskManager;
 import de.ur.mi.android.demos.todo.ui.TaskListAdapter;
@@ -22,14 +20,14 @@ public class MainActivity extends AppCompatActivity implements TaskManager.TaskM
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initUI();
         initTaskManager();
+        initUI();
+        // Request initial update from TaskManger to display tasks loaded from database when manager was created
+        taskManager.requestUpdate();
     }
 
     private void initTaskManager() {
-        RoomDatabaseHelper dbHelper = new RoomDatabaseHelper(getApplicationContext());
-        taskManager = new TaskManager(this, dbHelper);
-        taskManager.initTaskList();
+        taskManager = new TaskManager(getApplicationContext(), this);
     }
 
     private void initUI() {
@@ -45,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements TaskManager.TaskM
         taskList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                taskManager.toggleTaskStateForId(taskManager.getCurrentTasks().get(position).getId());
+                taskManager.toggleTaskStateForId(taskManager.getCurrentTasks().get(position).id.toString());
                 return true;
             }
         });
@@ -66,23 +64,14 @@ public class MainActivity extends AppCompatActivity implements TaskManager.TaskM
     private void onUserInputClicked(String input) {
         if (input.length() > 0) {
             taskManager.addTask(input);
+            taskDescriptionInput.setText("");
+            taskDescriptionInput.requestFocus();
         }
     }
 
     @Override
-    public void onTasksLoadedFromDatabase() {
-        taskListAdapter.setTasks(taskManager.getCurrentTasks());
-    }
-
-    @Override
-    public void onTaskAdded(Task task) {
-        taskListAdapter.setTasks(taskManager.getCurrentTasks());
-        taskDescriptionInput.setText("");
-        taskDescriptionInput.requestFocus();
-    }
-
-    @Override
-    public void onTaskChanged(Task task) {
-        taskListAdapter.setTasks(taskManager.getCurrentTasks());
+    public void onTaskListUpdated() {
+        ArrayList<Task> currentTasks = taskManager.getCurrentTasks();
+        taskListAdapter.setTasks(currentTasks);
     }
 }
