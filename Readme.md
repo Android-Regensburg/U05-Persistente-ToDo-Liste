@@ -92,7 +92,7 @@ Außerdem soll die Helper-Klasse eine Methode zum Einfügen eines Tasks in die D
 
 Integrieren Sie die Datenbank in ihre ToDo-App. Instanziieren Sie zunächst den `TaskDatabaseHelper` beim Erstellen des _TaskManagers_ und binden Sie ihn an den passenden Stellen im Code ein. Achten Sie dabei darauf, dass nur der _TaskManager_ Zugriff auf den `TaskDatabaseHelper` haben sollte! Denken Sie an dieser Stelle daran, dass der Helper den Kontext der Anwendung kennen muss, um auf die Datenbank zuzugreifen. Überlegen Sie sich, wie Sie diese Information aus der _Activity_, über den _Manager_ bis an den _Helper_ weitergeben können.
 
-- -Beim Starten der App sollen alle bereits in der Datenbank gespeicherten Einträge ausgelesen und in der entsprechenden `ArrayList` des _TaskManager_ gespeichert werden. Über die vorbereitete `requestUpdate()` Methode des _TaskManagers_ können die Listener des _TaskManagers_ explizit über die aktuell in der Aufgabenliste gespeicherten Aufgaben informiert werden.
+- Beim Starten der App sollen alle bereits in der Datenbank gespeicherten Einträge ausgelesen und in der entsprechenden `ArrayList` des _TaskManager_ gespeichert werden. Über die vorbereitete `requestUpdate()` Methode des _TaskManagers_ können die Listener des _TaskManagers_ explizit über die aktuell in der Aufgabenliste gespeicherten Aufgaben informiert werden.
 - Beim Hinzufügen eines neuen Tasks soll dieser zunächst in der Datenbank gespeichert und dann in die entsprechende Datenstruktur geladen werden, sodass dieser mithilfe des `ArrayAdapter` und des `ListView` auf dem Display angezeigt wird
 - Bei eine _LongClick_ auf ein `ListView`-Element wird der Status des darunterliegenden Tasks verändert, was dementsprechend auch in der Datenbank upgedatet werden soll
 
@@ -105,9 +105,3 @@ Es können aktuell zwar immer neue Tasks hinzugefügt und auch als abgeschlossen
 
 ### Filtern von Tasks
 Um nur offene Tasks oder Tasks eines bestimmten Datums anzeigen zu lassen, können sie eine Art Filterfunktion implementieren. Im simpelsten Fall können unterschiedliche Buttons dazu genutzt werden, nur bestimmte Tasks anzeigen zu lassen. Dazu müssen entsprechende Datenbankabfragen im _DAO_, sowie entsprechende Methoden in Ihrem RoomDatabaseHelper ergänzt werden.
-
-## Screenshots der Anwendung
-
-|  Erstellte Tasks bleiben nun auch nach Beenden der App erhalten und werden automatisch beim nächsten Start in die ListView geladen   |
-|:------:|
-| ![Screenshots der finalen ToDo-App](./docs/screenshot_to_do_liste.png)   |
