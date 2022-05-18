@@ -43,11 +43,11 @@ Laden Sie sich das Starterpaket herunter und verschaffen Sie sich einen Überbli
 
 Mit der `Task`-Klasse haben Sie bereits die Entität gegeben, welche in der Datenbank gespeichert werden soll. Diese Klasse repräsentiert somit einen Eintrag in der entsprechenden Tabelle, jede Instanzvariable eine potenzielle Spalte in unserer Datenbank. Einen Überblick, wie unsere Datenbank aussehen soll, bietet die Tabelle unten. Damit die _Room Library_ auch versteht, dass es sich bei Task um eine Entität handelt, muss die Klasse und Ihre Bestandteile entsprechend annotiert werden. Beachten Sie dabei auch, dass jede Entität einen sog. **Primärschlüssel** besitzt, also ein (oder auch mehrere) Attribut(e), welches jeden Datenpunkt unserer Datenbank eindeutig identifiziert.
 
-    |id |description|createdAt|currentState|
-    |:--|:----------|:--------|:-----------|
-    |1  |lernen     |11.5.2021|OPEN        |
-    |2  |einkaufen  |13.5.2021|CLOSED      |
-    |3  |kochen     |15.5.2021|OPEN        |
+|id |description|createdAt|currentState|
+|:--|:----------|:--------|:-----------|
+|1  |lernen     |11.5.2021|OPEN        |
+|2  |einkaufen  |13.5.2021|CLOSED      |
+|3  |kochen     |15.5.2021|OPEN        |
 
 **Zwischenziel:** -
 
