@@ -54,9 +54,10 @@ Mit der `Task`-Klasse haben Sie bereits die Entität gegeben, welche in der Date
 ### Schritt 3: Die Schnittstelle zur Room-Datenbank
 
 Implementieren Sie das DAO (_data access object_). Das DAO muss ein Interface (bevorzugt) oder eine abstrakte Klasse sein. Das DAO soll Methoden enthalten, die abstrakten Zugriff auf die Datenbank erlauben. Ihr DAO soll dabei drei Methoden enthalten:
-    * Eine Methode zum Auslesen aller in der Datenbank gespeicherten Tasks
-    * Eine Methode zum Einfügen eines einzelnen Tasks in die Datenbank
-    * Eine Methode zum Updaten eines Tasks, wenn sich dessen Status verändert hat
+
+- Eine Methode zum Auslesen aller in der Datenbank gespeicherten Tasks
+- Eine Methode zum Einfügen eines einzelnen Tasks in die Datenbank
+- Eine Methode zum Updaten eines Tasks, wenn sich dessen Status verändert hat
 
 **Zwischenziel:**
 
