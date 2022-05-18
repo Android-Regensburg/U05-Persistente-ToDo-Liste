@@ -1,5 +1,5 @@
 package de.ur.mi.android.demos.todo.tasks;
-import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -17,19 +17,14 @@ public class TaskManager {
 
     /**
      * Erzeugt einen neuen TaskManager
+     * Der Listener ist bei uns die MainActivity, die das TaskManagerListener-Interface
+     * implementiert.
      *
      * @param listener Observer/Listener, der über Änderungen an der Aufgabenliste informiert werden soll
      */
-    public TaskManager(Context context, TaskManagerListener listener) {
+    public TaskManager(TaskManagerListener listener) {
         this.listener = listener;
         this.tasks = new ArrayList<>();
-    }
-
-    /**
-     * Informiert den Listener des TaskManagers explizit über Veränderungen der Task-Liste
-     */
-    public void requestUpdate() {
-        listener.onTaskListUpdated();
     }
 
     /**
@@ -61,7 +56,7 @@ public class TaskManager {
      */
     public void toggleTaskStateForId(String id) {
         for (Task task : tasks) {
-            if (task.id.toString().equals(id)) {
+            if (task.getID().equals(id)) {
                 toggleTaskState(task);
             }
         }
@@ -85,11 +80,11 @@ public class TaskManager {
     }
 
     /**
-     * Gibt eine Kopier der aktuellen Aufgaben zurück, die von diesem TaskManger verwaltet werden
+     * Gibt eine Kopie der aktuellen Aufgaben zurück, die von diesem TaskManger verwaltet werden
      *
      * @return Sortierte ArrayList mit Kopien der aktuellen Aufgabe
      */
-    public ArrayList<Task> getCurrentTasks() {
+    public ArrayList<Task> getDeepCopyOfCurrentTasks() {
         // Erstellen einer neuen, leeren Liste für die kopierten Aufgaben
         ArrayList<Task> currentTasks = new ArrayList<>();
         // Iteration über die Liste der aktuellen Aufgaben

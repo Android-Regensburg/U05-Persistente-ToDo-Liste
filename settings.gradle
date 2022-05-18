@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name = "U04-Eine-Einfache-ToDo-Liste"
+rootProject.name = "ToDo-Liste-mit-DB"

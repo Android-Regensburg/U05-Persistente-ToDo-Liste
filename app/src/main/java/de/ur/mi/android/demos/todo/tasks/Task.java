@@ -1,51 +1,57 @@
 package de.ur.mi.android.demos.todo.tasks;
-import androidx.room.Ignore;
-import java.util.Date;
+
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.TimeZone;
 import java.util.UUID;
 
 /**
  * Repräsentiert eine Aufgabe auf der ToDo-liste.
- * <p>
+ *
  * Aufgaben verfügen über eine eindeutige ID, eine textuelle Beschreibung und ein Erstellungs-
- * datum. Diese Eigenschaften sind nach dem Erzeugen einer Aufgabe nicht veränderbar. Zusätzlich
- * wird für jede Aufgabe festgehalten, ob diese offen oder erledigt ist. Der Zustand kann über
- * öffentliche Methoden geändert werden.
- * <p>
- * Kopien
+ * datum. Diese Eigenschaften sind nach dem Erzeugen einer Aufgabe nicht veränderbar.
+ * Zusätzlich wird für jede Aufgabe festgehalten, ob diese offen oder erledigt ist.
+ * Der Zustand kann über öffentliche Methoden geändert werden.
+ *
+ * Kopien:
  * Über die copy-Methode können tiefe (deep) Kopien eines Task-Objekts erstellt werden.
- * <p>
- * Sortierung
- * Die Task-Klasse implementiert das Comparable-Interface das die Sortierung von Task-Objekten
+ *
+ * Sortierung:
+ * Die Task-Klasse implementiert das Comparable-Interface, das die Sortierung von Task-Objekten
  * ermöglicht. Offene Aufgaben werden vor geschlossenen Aufgaben einsportiert. Aufgaben mit
  * gleichem Status werden nach dem Erstellungsdatum sortiert.
  */
 public class Task implements Comparable<Task> {
-    public final UUID id;
-    public final String description;
-    public final Date createdAt;
-    private TaskState currentState;
 
-    @Ignore
+    private final UUID id; // eindeutige ID des Tasks
+    private final String description; // Beschreibung der Aufgabe (von Nutzenden eingegeben)
+    private final LocalDateTime createdAt; // Erstellungsdatum
+    private TaskState currentState; // Aktueller Zustand - offen oder erledigt
+
     public Task(String description) {
         this.id = UUID.randomUUID();
-        this.createdAt = new Date();
+        this.createdAt = LocalDateTime.now(TimeZone.getDefault().toZoneId());
         this.currentState = TaskState.OPEN;
         this.description = description;
     }
 
-    public Task(String description, UUID id, Date createdAt, TaskState currentState) {
+    private Task(String description, UUID id, LocalDateTime createdAt, TaskState currentState) {
         this.id = id;
         this.createdAt = createdAt;
         this.currentState = currentState;
         this.description = description;
     }
 
-    public TaskState getCurrentState() {
-        return currentState;
+    public String getID() {
+        return id.toString();
     }
 
-    public void setCurrentState(TaskState currentState) {
-        this.currentState = currentState;
+    public String getDescription() {
+        return description;
+    }
+
+    public LocalDateTime getCreationDate() {
+        return getCreationDateCopy();
     }
 
     public boolean isClosed() {
@@ -61,12 +67,12 @@ public class Task implements Comparable<Task> {
     }
 
     public Task copy() {
-        Date creationDateFromOriginal = getCreationDateCopy();
+        LocalDateTime creationDateFromOriginal = getCreationDateCopy();
         return new Task(description, id, creationDateFromOriginal, currentState);
     }
 
-    private Date getCreationDateCopy() {
-        return new Date(createdAt.getTime());
+    private LocalDateTime getCreationDateCopy() {
+        return LocalDateTime.from(createdAt);
     }
 
     @Override
@@ -83,6 +89,7 @@ public class Task implements Comparable<Task> {
         return -this.createdAt.compareTo(otherTask.createdAt);
     }
 
+    // Inneres Enum zur Angabe des Status der Aufgabe
     public enum TaskState {
         OPEN,
         CLOSED

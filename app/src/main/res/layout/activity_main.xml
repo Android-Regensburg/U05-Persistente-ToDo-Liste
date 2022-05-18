@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/app_title_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:padding="20dp"
+        android:textSize="32sp"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimary"
+        android:text="@string/app_name"/>
+
     <LinearLayout
         android:id="@+id/input_elements"
         android:layout_width="match_parent"
@@ -13,7 +26,7 @@
         android:orientation="horizontal"
         android:padding="10dp"
         android:weightSum="100"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/app_title_label">
 
         <EditText
             android:id="@+id/input_text"
@@ -29,15 +42,17 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="10"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/colorPrimary"
             android:text="@string/input_button_label" />
     </LinearLayout>
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/task_list"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:padding="10dp"
-        app:layout_constraintBottom_toTopOf="@id/app_description"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toBottomOf="@+id/input_elements" />
 
     <TextView
@@ -47,7 +62,7 @@
         android:padding="20dp"
         android:text="@string/app_description"
         android:textAlignment="center"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/grey"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent" />
 
