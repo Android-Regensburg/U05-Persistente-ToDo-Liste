@@ -3,5 +3,6 @@
   "abstract": "In dieser Aufgabe erweitern sie die ToDo-Listen-App des letzten Übungsblattes. Die erstellten Tasks sollen nun dauerhaft auf dem Smartphone gespeichert werden, sodass sie uns auch nach dem Beenden der App erhalten bleiben und beim nächsten Start erneut geladen werden können.",
   "hasStarterCode": true,
   "hasSolutionCode": true,
-  "solutionAvailableOn": "2021-05-20"
+  "hasSimpleSolutionCode": false,
+  "solutionAvailableOn": "2021-05-26"
 }
