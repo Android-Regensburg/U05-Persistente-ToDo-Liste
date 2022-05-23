@@ -7,7 +7,7 @@ In dieser Aufgabe beschäftigen Sie sich mit der Datenpersistierung in Android-A
 **Achtung:** Diese Aufgabe funktioniert anders als die vorherigen (und nachfolgenden). Sie werden Schritt für Schritt die Integration der [Room Persistence Library](https://developer.android.com/training/data-storage/room) durchspielen. Die Aufgabenbeschreibung erklärt Ihnen alle dafür notwendigen Teilschritte. Dabei werden Sie vergleichsweise wenig Entscheidungsfreiheit beim Programmieren haben. Versuchen Sie, die Besonderheiten der _Room_-Nutzung, z.B. die notwendigen Annotationen, nachzuvollziehen und zu verstehen. In weiteren Aufgaben werden wir um diese Basis herum wieder konkrete _Use Cases_ implementieren. Aufgrund des Aufbaus gibt es in dieser Aufgabe keine sinnvoll testbaren Zwischenziele.
 
 
-### Wichtige Stellen im vorgebenenen Code
+### Wichtige Stellen im vorgegebenen Code
 
 #### Der Taskmanager
 
@@ -63,7 +63,7 @@ Implementieren Sie das DAO (_data access object_). Das DAO muss ein Interface (b
 
 ### Schritt 4: Die Datenbank
 
-Erstellen Sie eine Klasse für die Room-Datenbank. Diese darf nicht instanziiert werden können (abstract) und muss von RoomDatabase erben. Vergessen Sie auch hier nicht, die Klasse dementsprechend zu annotieren. Durch eine abstrakte Getter-Methode macht die Datenbank Ihr DAO verfügbar. 
+Erstellen Sie eine Klasse für die Room-Datenbank. Diese darf nicht instanziiert werden können (`abstract`) und muss von RoomDatabase erben. Vergessen Sie auch hier nicht, die Klasse dementsprechend zu annotieren. Durch eine abstrakte Getter-Methode macht die Datenbank Ihr DAO verfügbar. 
 
 ### Schritt 5: TypeConverter nutzen
 
@@ -94,7 +94,7 @@ Integrieren Sie die Datenbank in ihre ToDo-App. Instanziieren Sie zunächst den 
 ## Mögliche Erweiterungen
 
 ### Löschen von Tasks
-Es können aktuell zwar immer neue Tasks hinzugefügt und auch als abgeschlossen markiert werden, allerdings können bestehende Tasks nicht komplett entfernt werden. Erweitern Sie Ihren Code also dementsprechend, um einen Task sowohl von des `ListView` zu entfernen und ergänzen Sie eine entsprechende Datenbankabfrage, die das Löschen eines einzelnen Tasks aus der Datenbank erlaubt. Das Löschen könnte z.B. implementiert werden, indem in einem einzelnen `ListView`-Eintrag ein zusätliches _Delete_-Icon mit `OnClickListener` ergänzt wird.
+Es können aktuell zwar immer neue Tasks hinzugefügt und auch als abgeschlossen markiert werden, allerdings können bestehende Tasks nicht komplett entfernt werden. Erweitern Sie Ihren Code also dementsprechend, um einen Task sowohl von des `ListView` zu entfernen und ergänzen Sie eine entsprechende Datenbankabfrage, die das Löschen eines einzelnen Tasks aus der Datenbank erlaubt. Das Löschen könnte z.B. implementiert werden, indem in einem einzelnen `ListView`-Eintrag ein zusätzliches _Delete_-Icon mit `OnClickListener` ergänzt wird.
 
 ### Filtern von Tasks
 Um nur offene Tasks oder Tasks eines bestimmten Datums anzeigen zu lassen, können sie eine Art Filterfunktion implementieren. Im simpelsten Fall können unterschiedliche Buttons dazu genutzt werden, nur bestimmte Tasks anzeigen zu lassen. Dazu müssen entsprechende Datenbankabfragen im _DAO_, sowie entsprechende Methoden in Ihrem RoomDatabaseHelper ergänzt werden.
