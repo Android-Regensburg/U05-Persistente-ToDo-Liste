@@ -1,5 +1,9 @@
 package de.ur.mi.android.demos.todo.room;
 import androidx.room.TypeConverter;
+
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.UUID;
 import de.ur.mi.android.demos.todo.tasks.Task;
@@ -11,14 +15,14 @@ public class TaskAttributeTypeConverter {
 
     // Konvertieren eines Datums (Date) in die entsprechenden Millisekunden (Long)
     @TypeConverter
-    public static Date millisecondsToDate(Long milliseconds) {
-        return milliseconds == null ? null : new Date(milliseconds);
+    public static LocalDateTime millisecondsToDate(Long milliseconds) {
+        return milliseconds == null ? null : Instant.ofEpochMilli(milliseconds).atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
 
     // Konvertieren von Millisekunden (Long) in ein entsprechendes Datum (Date)
     @TypeConverter
-    public static Long dateToMilliseconds(Date date) {
-        return date == null ? null : date.getTime();
+    public static Long dateToMilliseconds(LocalDateTime date) {
+        return date == null ? null : date.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
     }
 
     // Konvertieren von String zu UUID
