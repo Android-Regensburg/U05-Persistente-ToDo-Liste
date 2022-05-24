@@ -4,7 +4,6 @@ import androidx.room.TypeConverter;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Date;
 import java.util.UUID;
 import de.ur.mi.android.demos.todo.tasks.Task;
 
@@ -13,15 +12,15 @@ import de.ur.mi.android.demos.todo.tasks.Task;
  */
 public class TaskAttributeTypeConverter {
 
-    // Konvertieren eines Datums (Date) in die entsprechenden Millisekunden (Long)
+    // Konvertieren eines Datums (LocalDateTime) in die entsprechenden Millisekunden (Long)
     @TypeConverter
-    public static LocalDateTime millisecondsToDate(Long milliseconds) {
-        return milliseconds == null ? null : Instant.ofEpochMilli(milliseconds).atZone(ZoneId.systemDefault()).toLocalDateTime();
+    public static LocalDateTime toLocalDateTime(Long epochMilli) {
+        return epochMilli == null ? null : Instant.ofEpochMilli(epochMilli).atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
 
-    // Konvertieren von Millisekunden (Long) in ein entsprechendes Datum (Date)
+    // Konvertieren von Millisekunden (Long) in ein entsprechendes Datum (LocalDateTime)
     @TypeConverter
-    public static Long dateToMilliseconds(LocalDateTime date) {
+    public static Long toTimestamp(LocalDateTime date) {
         return date == null ? null : date.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
     }
 
