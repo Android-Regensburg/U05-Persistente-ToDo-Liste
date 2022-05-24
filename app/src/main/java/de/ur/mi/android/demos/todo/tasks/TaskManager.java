@@ -98,6 +98,15 @@ public class TaskManager {
         Collections.sort(currentTasks);
         return currentTasks;
     }
+    
+    /*
+    * Diese Methode kann verwendet werden, um von außerhalb des TaskManagers eine Aktualisierung durch den
+    * registrierten Listener anzufordern. Beachten Sie, dass dies erst möglich ist, wenn TaskManager
+    * und über den Adapter angeschlossenes UI vollständig initialisiert wurden.
+    */
+    public void requestUpdate() {
+        listener.onTaskListUpdated();
+    }
 
     /**
      * Interface für Observer, die über Änderungen am Zustand eines TaskMangers informiert werden sollen.
